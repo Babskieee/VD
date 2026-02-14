@@ -1,0 +1,565 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #ffb3d9 0%, #ffe5f0 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Georgia', serif;
+            position: relative;
+            gap: clamp(20px, 5vh, 60px);
+            padding: 40px 20px;
+        }
+
+        .message {
+            text-align: center;
+            color: #d81b60;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            animation: fadeInBounce 1.5s ease-out forwards 1s;
+            width: 90%;
+            max-width: 600px;
+            margin-top: -5vh;
+        }
+
+        .message h1 {
+            font-size: clamp(1.8em, 6vw, 3.5em);
+            margin-bottom: 10px;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        @keyframes fadeInBounce {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(5px) scale(1.02);
+            }
+            80% {
+                transform: translateY(-3px) scale(0.99);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .garden {
+            position: relative;
+            width: min(90vw, 600px);
+            height: min(90vw, 600px);
+            max-width: 600px;
+            max-height: 600px;
+            filter: drop-shadow(0 10px 40px rgba(255, 105, 180, 0.3));
+        }
+
+        .garden::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+        }
+
+        .tulip {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            opacity: 0;
+        }
+
+        .tulip.grow {
+            animation: growAndRotate 1.5s ease-out forwards, gentleSway 4s ease-in-out infinite 2s;
+        }
+
+        @keyframes gentleSway {
+            0%, 100% {
+                transform: translate(-50%, 0) rotate(var(--rotation)) scale(1);
+            }
+            25% {
+                transform: translate(-50%, 0) rotate(calc(var(--rotation) - 3deg)) scale(1);
+            }
+            75% {
+                transform: translate(-50%, 0) rotate(calc(var(--rotation) + 3deg)) scale(1);
+            }
+        }
+
+        /* Different rotations for each tulip */
+        .tulip:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .tulip:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        .tulip:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+        .tulip:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+        .tulip:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+
+        .tulip:nth-child(1) { transform: translate(-50%, 0) rotate(-40deg); }
+        .tulip:nth-child(2) { transform: translate(-50%, 0) rotate(-20deg); }
+        .tulip:nth-child(3) { transform: translate(-50%, 0) rotate(0deg); }
+        .tulip:nth-child(4) { transform: translate(-50%, 0) rotate(20deg); }
+        .tulip:nth-child(5) { transform: translate(-50%, 0) rotate(40deg); }
+
+        @keyframes growAndRotate {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 0) rotate(var(--rotation)) scale(0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, 0) rotate(var(--rotation)) scale(1);
+            }
+        }
+
+        .stem {
+            width: 4px;
+            height: clamp(150px, 33vw, 200px);
+            background: linear-gradient(to top, #4a7c2e, #5a9c3e);
+            border-radius: 2px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .flower {
+            position: absolute;
+            top: clamp(-40px, -8vw, -50px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: clamp(35px, 8vw, 50px);
+            height: clamp(50px, 11vw, 70px);
+        }
+
+        .bulb {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Create realistic tulip petals */
+        .petal {
+            position: absolute;
+            width: 50%;
+            height: 70%;
+            border-radius: 50% 50% 40% 40%;
+        }
+
+        /* Front center petal */
+        .petal:nth-child(1) {
+            z-index: 5;
+            left: 50%;
+            top: 5%;
+            transform: translateX(-50%);
+        }
+
+        /* Left front petal */
+        .petal:nth-child(2) {
+            z-index: 4;
+            left: 10%;
+            top: 15%;
+            transform: rotate(-15deg);
+        }
+
+        /* Right front petal */
+        .petal:nth-child(3) {
+            z-index: 4;
+            right: 10%;
+            top: 15%;
+            transform: rotate(15deg);
+        }
+
+        /* Left back petal */
+        .petal:nth-child(4) {
+            z-index: 2;
+            left: 5%;
+            top: 20%;
+            transform: rotate(-25deg);
+            opacity: 0.8;
+        }
+
+        /* Right back petal */
+        .petal:nth-child(5) {
+            z-index: 2;
+            right: 5%;
+            top: 20%;
+            transform: rotate(25deg);
+            opacity: 0.8;
+        }
+
+        /* Back center petal */
+        .petal:nth-child(6) {
+            z-index: 1;
+            left: 50%;
+            top: 25%;
+            transform: translateX(-50%);
+            opacity: 0.7;
+        }
+
+        /* Different colors for each tulip */
+        .tulip:nth-child(1) .petal {
+            background: linear-gradient(to bottom, #ff1744 0%, #d81b60 80%, #b0003a 100%);
+        }
+
+        .tulip:nth-child(2) .petal {
+            background: linear-gradient(to bottom, #ff4081 0%, #f50057 80%, #c51162 100%);
+        }
+
+        .tulip:nth-child(3) .petal {
+            background: linear-gradient(to bottom, #ff6090 0%, #ff1744 80%, #d81b60 100%);
+        }
+
+        .tulip:nth-child(4) .petal {
+            background: linear-gradient(to bottom, #f50057 0%, #c51162 80%, #880e4f 100%);
+        }
+
+        .tulip:nth-child(5) .petal {
+            background: linear-gradient(to bottom, #ff80ab 0%, #ff4081 80%, #f50057 100%);
+        }
+
+        /* Add dimensional highlight to petals */
+        .petal::before {
+            content: '';
+            position: absolute;
+            top: 5%;
+            left: 20%;
+            right: 20%;
+            height: 40%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(8px);
+        }
+
+        /* Add subtle shadow to petals */
+        .petal::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 30%;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 50%;
+            filter: blur(3px);
+        }
+
+        /* Center stamen */
+        .stamen {
+            position: absolute;
+            width: 20%;
+            height: 20%;
+            background: radial-gradient(circle, #2d2d2d 0%, #1a1a1a 100%);
+            border-radius: 50%;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 6;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .stamen::before {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            background: #ffd700;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .leaf {
+            position: absolute;
+            width: clamp(18px, 4vw, 25px);
+            height: clamp(30px, 6.5vw, 40px);
+            background: #4a7c2e;
+            border-radius: 50% 0%;
+            top: clamp(75px, 16vw, 100px);
+        }
+
+        .leaf.left {
+            left: -10px;
+            transform: rotate(-20deg) scaleY(-1);
+        }
+
+        .leaf.right {
+            right: -10px;
+            transform: rotate(20deg) scaleX(-1) scaleY(-1);
+        }
+
+        /* Floating hearts */
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            opacity: 0;
+            left: 50%;
+            bottom: 50%;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            background: #ff69b4;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .heart::before {
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        /* Different sizes and animations for each heart */
+        .heart:nth-child(1) {
+            animation: floatHeartLeft 4s ease-out infinite 2s;
+        }
+        .heart:nth-child(1)::before,
+        .heart:nth-child(1)::after {
+            width: 12px;
+            height: 18px;
+        }
+        .heart:nth-child(1)::before {
+            left: 6px;
+        }
+
+        .heart:nth-child(2) {
+            animation: floatHeartRight 5s ease-out infinite 2.8s;
+        }
+        .heart:nth-child(2)::before,
+        .heart:nth-child(2)::after {
+            width: 18px;
+            height: 27px;
+        }
+        .heart:nth-child(2)::before {
+            left: 9px;
+        }
+
+        .heart:nth-child(3) {
+            animation: floatHeartCenter 4.5s ease-out infinite 3.5s;
+        }
+        .heart:nth-child(3)::before,
+        .heart:nth-child(3)::after {
+            width: 15px;
+            height: 22px;
+        }
+        .heart:nth-child(3)::before {
+            left: 7.5px;
+        }
+
+        .heart:nth-child(4) {
+            animation: floatHeartLeft 5.5s ease-out infinite 4.2s;
+        }
+        .heart:nth-child(4)::before,
+        .heart:nth-child(4)::after {
+            width: 14px;
+            height: 21px;
+        }
+        .heart:nth-child(4)::before {
+            left: 7px;
+        }
+
+        .heart:nth-child(5) {
+            animation: floatHeartRight 4.8s ease-out infinite 5s;
+        }
+        .heart:nth-child(5)::before,
+        .heart:nth-child(5)::after {
+            width: 16px;
+            height: 24px;
+        }
+        .heart:nth-child(5)::before {
+            left: 8px;
+        }
+
+        @keyframes floatHeartLeft {
+            0% {
+                transform: translate(-50%, 0) scale(0.3) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.9;
+            }
+            85% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate(calc(-50% - 80px), -350px) scale(1.2) rotate(-15deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatHeartRight {
+            0% {
+                transform: translate(-50%, 0) scale(0.3) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.9;
+            }
+            85% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate(calc(-50% + 80px), -350px) scale(1.2) rotate(15deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatHeartCenter {
+            0% {
+                transform: translate(-50%, 0) scale(0.3) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.9;
+            }
+            85% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate(-50%, -380px) scale(1.3) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkle effects */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #fff 0%, #ffe5f0 50%, transparent 100%);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            box-shadow: 0 0 6px #fff, 0 0 12px #ffb3d9;
+        }
+
+        .sparkle::before,
+        .sparkle::after {
+            content: '';
+            position: absolute;
+            background: white;
+            opacity: 0.8;
+        }
+
+        .sparkle::before {
+            width: 8px;
+            height: 1px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .sparkle::after {
+            width: 1px;
+            height: 8px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1) rotate(180deg);
+            }
+        }
+
+        /* Bloom effect on click */
+        .tulip.blooming .flower {
+            animation: bloomWider 0.6s ease-out forwards;
+        }
+
+        @keyframes bloomWider {
+            0% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.15);
+            }
+            100% {
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        .tulip.blooming .petal {
+            animation: petalSpread 0.6s ease-out forwards;
+        }
+
+        @keyframes petalSpread {
+            0% {
+                transform: var(--original-transform) scale(1);
+            }
+            50% {
+                transform: var(--original-transform) scale(1.1);
+            }
+            100% {
+                transform: var(--original-transform) scale(1);
+            }
+        }
+
+        .bottom-message {
+            text-align: center;
+            color: #d81b60;
+            font-size: clamp(1.2em, 4vw, 2em);
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            animation: fadeInBounce 1.5s ease-out forwards 3s;
+            width: 90%;
+            max-width: 600px;
+            letter-spacing: 2px;
+            margin-top: -5vh;
+        }
